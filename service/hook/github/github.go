@@ -33,6 +33,7 @@ type CommitModel struct {
 // PushEventModel ...
 type PushEventModel struct {
 	Ref        string        `json:"ref"`
+	BaseRef    string        `json:"base_ref"`
 	Deleted    bool          `json:"deleted"`
 	HeadCommit CommitModel   `json:"head_commit"`
 	Commits    []CommitModel `json:"commits"`
