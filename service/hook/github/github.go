@@ -148,6 +148,70 @@ type IssuePullRequestInfoModel struct {
 	MergedAt string `json:"merged_at"`
 }
 
+// MergeQueueProviderType represents the type of merge queue provider
+type MergeQueueProviderType string
+
+const (
+	// MergeQueueProviderGitHub represents GitHub's merge queue provider
+	MergeQueueProviderGitHub MergeQueueProviderType = "github"
+	// MergeQueueProviderGraphite represents Graphite's merge queue provider
+	MergeQueueProviderGraphite MergeQueueProviderType = "graphite"
+	// MergeQueueProviderMergify represents Mergify's merge queue provider
+	MergeQueueProviderMergify MergeQueueProviderType = "mergify"
+)
+
+// MergeQueueEntryState represents the state of a merge queue entry
+type MergeQueueEntryState string
+
+const (
+	// MergeQueueEntryStateQueued represents a queued state
+	MergeQueueEntryStateQueued MergeQueueEntryState = "queued"
+	// MergeQueueEntryStateInProgress represents an in-progress state
+	MergeQueueEntryStateInProgress MergeQueueEntryState = "in_progress"
+	// MergeQueueEntryStateCompleted represents a completed state
+	MergeQueueEntryStateCompleted MergeQueueEntryState = "completed"
+	// MergeQueueEntryStateFailed represents a failed state
+	MergeQueueEntryStateFailed MergeQueueEntryState = "failed"
+)
+
+// MergeQueueEventModel represents a merge queue event
+type MergeQueueEventModel struct {
+	// Provider identifies which merge queue provider sent this event
+	Provider MergeQueueProviderType `json:"provider"`
+	// Action represents the type of event (e.g., "queued", "dequeued", "merged", etc.)
+	Action string `json:"action"`
+	// State represents the current state of the merge queue entry
+	State MergeQueueEntryState `json:"state"`
+	// QueueEntryID is a unique identifier for this queue entry
+	QueueEntryID string `json:"queue_entry_id"`
+	// QueueName is the name of the queue this entry belongs to
+	QueueName string `json:"queue_name"`
+	// Position represents the current position in the queue (1-based, 0 means not in queue)
+	Position int `json:"position"`
+	// PullRequestInfo contains the associated pull request information
+	PullRequestInfo PullRequestInfoModel `json:"pull_request"`
+	// ProviderSpecificData contains any provider-specific data as a JSON object
+	ProviderSpecificData map[string]interface{} `json:"provider_specific_data,omitempty"`
+	// Timestamp when this event occurred
+	Timestamp string `json:"timestamp"`
+	// Actor represents the user who triggered this event
+	Actor UserModel `json:"actor"`
+}
+
+// MergeQueueCheckModel represents a check run in the merge queue
+type MergeQueueCheckModel struct {
+	// Name of the check
+	Name string `json:"name"`
+	// State of the check (e.g., "pending", "success", "failure")
+	State string `json:"state"`
+	// URL to the check details
+	URL string `json:"url"`
+	// StartedAt timestamp when the check started
+	StartedAt string `json:"started_at"`
+	// CompletedAt timestamp when the check completed
+	CompletedAt string `json:"completed_at,omitempty"`
+}
+
 // ---------------------------------------
 // --- Webhook Provider Implementation ---
 
