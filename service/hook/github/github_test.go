@@ -1774,7 +1774,7 @@ func Test_transformIssueCommentEvent(t *testing.T) {
 func Test_isAcceptPullRequestAction(t *testing.T) {
 	t.Log("Accept")
 	{
-		for _, anAction := range []string{"opened", "reopened", "synchronize", "edited", "ready_for_review", "labeled"} {
+		for _, anAction := range []string{"opened", "reopened", "synchronize", "edited", "ready_for_review", "labeled", "unlabeled", "enqueued", "dequeued", "merged", "closed"} {
 			t.Log(" * " + anAction)
 			require.Equal(t, true, isAcceptPullRequestAction(anAction))
 		}
@@ -1784,7 +1784,7 @@ func Test_isAcceptPullRequestAction(t *testing.T) {
 	{
 		for _, anAction := range []string{"",
 			"a", "not-an-action",
-			"assigned", "unassigned", "unlabeled", "closed"} {
+			"assigned", "unassigned"} {
 			t.Log(" * " + anAction)
 			require.Equal(t, false, isAcceptPullRequestAction(anAction))
 		}

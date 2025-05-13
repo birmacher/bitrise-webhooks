@@ -296,7 +296,7 @@ func parseMergeQueueRef(ref string) (provider string, baseBranch string, prNumbe
 }
 
 func isAcceptPullRequestAction(prAction string) bool {
-	return slices.Contains([]string{"opened", "reopened", "synchronize", "edited", "ready_for_review", "labeled"}, prAction)
+	return slices.Contains([]string{"opened", "reopened", "synchronize", "edited", "ready_for_review", "labeled", "unlabeled", "enqueued", "dequeued", "merged", "closed"}, prAction)
 }
 
 func transformPullRequestEvent(pullRequest PullRequestEventModel) hookCommon.TransformResultModel {
